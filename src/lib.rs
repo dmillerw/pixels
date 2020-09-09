@@ -91,6 +91,7 @@ pub struct PixelsContext {
 pub struct Pixels<W: HasRawWindowHandle> {
     context: PixelsContext,
     surface_size: SurfaceSize,
+    texture_format: wgpu::TextureFormat,
     present_mode: wgpu::PresentMode,
     _phantom: std::marker::PhantomData<W>,
 
@@ -607,6 +608,8 @@ impl<'req, 'win, W: HasRawWindowHandle> PixelsBuilder<'req, 'win, W> {
     ///
     /// Returns an error when a [`wgpu::Adapter`] cannot be found.
     pub fn build(self) -> Result<Pixels<W>, Error> {
+        let texture_format = self.texture_format;
+        
         let instance = wgpu::Instance::new(self.backend);
 
         // TODO: Use `options.pixel_aspect_ratio` to stretch the scaled texture
@@ -693,6 +696,7 @@ impl<'req, 'win, W: HasRawWindowHandle> PixelsBuilder<'req, 'win, W> {
         Ok(Pixels {
             context,
             surface_size,
+            texture_format,
             present_mode,
             _phantom: std::marker::PhantomData,
             pixels,
