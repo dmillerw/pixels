@@ -222,7 +222,7 @@ impl<'win, W: HasRawWindowHandle> Pixels<W> {
             &self.context.surface,
             &wgpu::SwapChainDescriptor {
                 usage: wgpu::TextureUsage::OUTPUT_ATTACHMENT,
-                format: wgpu::TextureFormat::Bgra8UnormSrgb,
+                format: self.texture_format,
                 width: self.surface_size.width,
                 height: self.surface_size.height,
                 present_mode: self.present_mode,
@@ -663,7 +663,7 @@ impl<'req, 'win, W: HasRawWindowHandle> PixelsBuilder<'req, 'win, W> {
             &surface,
             &wgpu::SwapChainDescriptor {
                 usage: wgpu::TextureUsage::OUTPUT_ATTACHMENT,
-                format: wgpu::TextureFormat::Bgra8UnormSrgb,
+                format: self.texture_format,
                 width: surface_size.width,
                 height: surface_size.height,
                 present_mode,
